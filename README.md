@@ -13,9 +13,9 @@ The project uses Playwright's test runner for test execution.
 
 1. **Clone the repository**:
 
-   ```bash
-   git clone <your-repo-url>
-   cd <your-repo-directory>
+	```   
+	git clone https://github.com/haurova/velixo-test-task.git
+	cd velixo-test-task
 
 2. **Install dependencies**:
 
