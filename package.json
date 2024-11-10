@@ -1,0 +1,26 @@
+{
+  "name": "velixo-test-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.48.2",
+    "@types/node": "^22.9.0",
+    "@types/qs": "^6.9.17",
+    "dotenv": "^16.4.5",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "qs": "^6.13.0"
+  },
+  "jest": {
+    "preset": "jest-playwright-preset"
+  }
+}
