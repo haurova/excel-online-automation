@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
   await login.loginToMicrosoftAcc(process.env.USERNAME!, process.env.PASSWORD!);
   await expect(page).toHaveTitle('velixo-test-assignment.xlsx - Microsoft Excel Online');
 
-  // Clear clipboard so in case copy doesn't work properly and by some chance clipboard has the today date, the test won't pass
+  // clear clipboard so in case copy doesn't work properly and by some chance clipboard has the today date, the test won't pass
   await page.evaluate(() => {
     navigator.clipboard.writeText('');
   });
@@ -22,13 +22,21 @@ test.beforeEach(async ({ page }) => {
 
 test('verify TODAY() function', async ({ page }) => {
   const helper = new Helpers(page);
-  await page.waitForTimeout(3000); // timeout to ensure that the page is loaded
-  await page.mouse.move(550, 490);
-  await page.waitForTimeout(2000); // timeout to let the movemement finish
-  await page.mouse.click(550, 490);
-  await page.keyboard.type('=TODAY()');
-  await page.keyboard.press('Enter');
-  await page.keyboard.press('ArrowUp');
+  const frame = page.locator('#WacFrame_Excel_0').contentFrame();
+  const selectCell = frame.locator('#FormulaBar-NameBox-input')
+  const formulaBar = frame.locator('#formulaBarTextDivId_textElement')
+  const commitButton = frame.getByRole('button', {name: 'commit edit'})
+  const popUpButton = frame.getByRole('button', {name: 'Got it'})
+
+
+  await selectCell.click()
+  await selectCell.fill('A1')
+  await page.keyboard.press('Enter'); 
+  await formulaBar.click();
+  await formulaBar.pressSequentially('=TODAY()');
+  await commitButton.click();
+  await popUpButton.click(); // closing annoying excel pop up about new script button
+  await popUpButton.isVisible!()
   await page.keyboard.press('Control+C');
   await page.waitForTimeout(2000); // timeout to let the clipboard update
   await page.keyboard.press('Delete');
@@ -39,5 +47,6 @@ test('verify TODAY() function', async ({ page }) => {
 
   console.log('clipboard: ' + clipboardContent, 'today: ' + await helper.dateFormatted(new Date()))
   expect(clipboardContent).toContain(await helper.dateFormatted(new Date())); 
+
 });
  
