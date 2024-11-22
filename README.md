@@ -1,4 +1,4 @@
-# Velixo Test Assignment - Excel Online Automation
+Excel Online Automation
 
 This repository contains an automated test suite built with Playwright to interact with Excel Online using the Microsoft Graph API. The test automates the following tasks:
 
